@@ -1,0 +1,11 @@
+image: node:14
+
+stages:
+  - test
+
+test:
+  stage: test
+  before_script:
+    - npm install
+  script:
+    - npx mocha api.test.js
