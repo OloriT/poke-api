@@ -1,11 +1,19 @@
-image: node:14
+# This is a basic workflow to help you get started with Actions
 
-stages:
-  - test
+name: "Newman Tests"
+on: 
+    schedule:
+    - cron:  '*/1440 12* * * *'    # At every 15th minute
+#[push, pull_request]
 
-test:
-  stage: test
-  before_script:
-    - npm install
-  script:
-    - npx mocha api.test.js
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: 
+      image: postman/newman
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run API Tests
+        run: newman run "package.json"
